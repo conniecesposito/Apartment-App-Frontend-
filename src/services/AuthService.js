@@ -2,13 +2,13 @@ import decode from 'jwt-decode';
 export default class AuthService {
     constructor(domain) {
         this.domain = domain || 'http://localhost:3000' // We can pass in the backend server, or use a default for dev
-        this.fetch = this.fetch.bind(this)
+        this.fetch = this.createCustomFetch.bind(this)
         this.login = this.login.bind(this)
         this.getUserId = this.getUserId.bind(this)
     }
 
     login(email, password) {
-      return this.fetch(`${this.domain}/user_token`, { // Our backend endpoint
+      return this.createCustomFetch("http://localhost:3000/user_token", { // Our backend endpoint
         method: 'POST',
         body: JSON.stringify({
           auth: { // We pass in email and password from the login form
@@ -66,7 +66,7 @@ export default class AuthService {
 
     // Enhance the standard version of fetch() by
     // adding the authentication headers into every request
-    fetch(url, options) {
+    createCustomFetch(url, options) {
       const headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -90,6 +90,7 @@ export default class AuthService {
       } else {
         var error = new Error(response.statusText)
         error.response = response
+        console.log(error);
         throw error
       }
    }

@@ -6,6 +6,7 @@ import Show from '../pages/apartments/Show'
 import Create from '../pages/apartments/Create'
 import AuthService from '../services/AuthService'
 import Login from '../components/Login'
+import NewApartment from '../pages/apartments/NewApartment'
 
 const Auth = new AuthService()
 
@@ -19,14 +20,15 @@ class ApartmentContainer extends Component {
                 {Auth.loggedIn()
                     ? <Switch>
                         <Route exact path="/apartments/new" component={Create} />
+                        <Route path="/apartments/NewApartments" component={NewApartment} />
                         <Route path={`${url}/:id`} component={Show} />
-                        <Route exact path="/" component={All} />
+                        <Route path={`${url}/apartments/new`} component={NewApartment} />
+
                     </Switch>
                     : <Switch>
                         <Route exact path={"/apartments"} component={All} />
                         <Redirect from="/apartments/new" to="/Login"/>
                         <Redirect from={`${url}/:id`} to="/Login"/>
-                        <Route exact path="/" component={All} />
                     </Switch>
                 }
             </div>

@@ -19,6 +19,7 @@ class Login extends Component {
 
   handleFormSubmit(e){
   e.preventDefault()
+  console.log("from handlform function", this.state.email, this.state.password);
   this.Auth.login(this.state.email,this.state.password)
   .then(res =>{
     this.props.history.replace('/')
